@@ -1,0 +1,15 @@
+* {
+  outline: 1px solid magenta;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  box-sizing: border-box;
+}
+
+.searchdiv {
+  text-align: center;
+}
