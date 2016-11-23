@@ -11,15 +11,16 @@ $(function() {
         success: function(books) {
           var shelf = $('<div class="books"></div>')
           $.each(books.items, function(i, book) {
-            var imgBox = $('<div "class=imgBox"></div>')
             var aBook = $('<div class="aBook"></div>')
+            var titleAuthor = $('<div class="titleAuthor"></div>')
             if (book && book.volumeInfo && book.volumeInfo.imageLinks) {
               $(aBook).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
             }
-            $(aBook).append(imgBox)
-            $(aBook).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
-            $(aBook).append($('<br>'))
-            $(aBook).append($('<p></p>').text(book.volumeInfo.authors))
+            $(titleAuthor).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
+            $(titleAuthor).append($('<br>'))
+            $(titleAuthor).append($('<p></p>').text(book.volumeInfo.authors.join(', ')))
+            $(aBook).append(titleAuthor)
+            $(aBook).append($('<p></p>').text(book.volumeInfo.description))
             $(shelf).append(aBook)
           })
           $('#books').append(shelf);
@@ -49,7 +50,7 @@ $(function() {
         }
       })
     }
-  }).then(function(data) {})
+  })
   $("form").on("submit", function(e) {
     e.preventDefault();
     typeWord($("input").val())
@@ -57,19 +58,29 @@ $(function() {
 
   function typeWord(whatISearched) {
     $('#word').empty()
-    $('#word').append($("<h2></h2>").text(whatISearched));
+    $('#word').append($("<h2></h2>").text(whatISearched.charAt(0).toUpperCase() + whatISearched.substring(1, whatISearched.length).toLowerCase()));
     $.ajax({
       url: "https://www.googleapis.com/books/v1/volumes?q=" + whatISearched,
       crossDomain: true,
       success: function(books) {
-        $('#books').empty()
+        var shelf = $('<div class="books"></div>')
         $.each(books.items, function(i, book) {
-          $('#books').append($('<span></span>').text(book.volumeInfo.title))
-          $('#books').append($('<span></span>').text(book.volumeInfo.authors))
+          var aBook = $('<div class="aBook"></div>')
+          var titleAuthor = $('<div class="titleAuthor"></div>')
+          if (book && book.volumeInfo && book.volumeInfo.imageLinks) {
+            $(aBook).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
+          }
+          $(titleAuthor).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
+          $(titleAuthor).append($('<br>'))
+          $(titleAuthor).append($('<p></p>').text(book.volumeInfo.authors.join(', ')))
+          $(aBook).append(titleAuthor)
+          $(aBook).append($('<p></p>').text(book.volumeInfo.description))
+          $(shelf).append(aBook)
         })
+        $('#books').empty().append(shelf);
         $.ajax({
           type: "GET",
-          url: "http://api.wordnik.com:80/v4/word.json/" + whatISearched + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+          url: "http://api.wordnik.com:80/v4/word.json/" + whatISearched.toLowerCase() + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
           crossDomain: true,
           success: function(definition) {
             $('#definition').empty()
