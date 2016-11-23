@@ -30,11 +30,11 @@ $(function() {
             success: function(definition) {
               var definitionLine = $('<div class="definitions"></div>')
               if (definition.length < 1) {
-                $('#definition').append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
+                $(definitionLine).append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
               } else {
                 $.each(definition, function(j, def) {
                   if (def.text === "") {
-                    $('#definition').append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
+                    $(definitionLine).append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
                   } else {
                     $(definitionLine).append($('<span></span>').text((j + 1) + ". " + def.partOfSpeech + ":  "));
                     $(definitionLine).append($('<p></p>').text(def.text))
@@ -77,6 +77,7 @@ $(function() {
           $(shelf).append(aBook)
         })
         $('#books').empty().append(shelf);
+
         $.ajax({
           type: "GET",
           url: "http://api.wordnik.com:80/v4/word.json/" + whatISearched + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
@@ -84,17 +85,16 @@ $(function() {
           success: function(definition) {
             var definitionLine = $('<div class="definitions"></div>')
             if (definition.length < 1) {
-              $('#definition').append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
+              $(definitionLine).append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
             } else {
               $.each(definition, function(j, def) {
                 if (def.text === "") {
-                  $('#definition').append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
+                  $(definitionLine).append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
                 } else {
                   $(definitionLine).append($('<span></span>').text((j + 1) + ". " + def.partOfSpeech + ":  "));
                   $(definitionLine).append($('<p></p>').text(def.text))
                   $(definitionLine).append($('<span></span>').text("-" + def.attributionText))
                   $(definitionLine).append($('<br>'))
-                  console.log(def);
                 }
               })
             }
