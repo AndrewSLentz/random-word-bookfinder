@@ -8,11 +8,18 @@ $(function() {
       $.ajax({
         url: "https://www.googleapis.com/books/v1/volumes?q=" + randomWord,
         crossDomain: true,
+        async: false,
         success: function(books) {
           var shelf = $('<div class="books"></div>')
           $.each(books.items, function(i, book) {
-            console.log(book.volumeInfo)
-            $(shelf).append($('<img>').attr('src', book.volumeInfo.imageLinks.smallThumbnail));
+            var imgBox = $('<div "class=imgBox"></div>')
+            var aBook = $('<div class="aBook"></div>')
+            $(imgBox).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
+            $(aBook).append(imgBox)
+            $(aBook).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
+            $(aBook).append($('<br>'))
+            $(aBook).append($('<p></p>').text(book.volumeInfo.authors[0]))
+            $(shelf).append(aBook)
           })
           $('#books').append(shelf);
           $.ajax({
@@ -22,7 +29,7 @@ $(function() {
             success: function(definition) {
               var definitionLine = $('<div class="definitions"></div>')
               $.each(definition, function(j, def) {
-                $(definitionLine).append($('<span></span>').text((j+1) + ". " + def.partOfSpeech + ":  "));
+                $(definitionLine).append($('<span></span>').text((j + 1) + ". " + def.partOfSpeech + ":  "));
                 $(definitionLine).append($('<p></p>').text(def.text))
                 $(definitionLine).append($('<span></span>').text("-" + def.attributionText))
                 $(definitionLine).append($('<br>'))
