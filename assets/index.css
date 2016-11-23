@@ -1,0 +1,25 @@
+* {
+  outline: 1px solid magenta;
+}
+
+* {
+  box-sizing: border-box;
+  color: #1A1818;
+}
+
+html, body {
+  box-sizing: border-box;
+}
+
+.searchdiv {
+  text-align: center;
+}
+
+.searchy {
+  background-color: #EEEEEE;
+}
+
+button {
+  background-color: #50A7E0;
+  border: 1px solid #50A7E0;
+}
