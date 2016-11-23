@@ -1,4 +1,5 @@
-$("form").on("submit", function(e){
+$(document).ready(function(){
+  $("form").on("submit", function(e){
   e.preventDefault();
   typeWord($("input").val())
 })
@@ -9,16 +10,18 @@ function typeWord(whatISearched) {
     crossDomain: true,
     success: function(books) {
       $.each(books.items, function(i, book) {
-        console.log(book.volumeInfo.title)
+        console.log(book.volumeInfo)
       })
       $.ajax({
         type: "GET",
-        url: "https://api.pearson.com/v2/dictionaries/ldoce5/entries?headword=" + whatISearched + "&apikey=gFKC8n1QtPXDkINvhlm7v8fwFulOwzYR",
+        url: "http://api.wordnik.com:80/v4/word.json/" + whatISearched + "/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
         crossDomain: true,
         success: function(definition) {
-          console.log(definition.results);
+          console.log(definition);
         }
       })
     }
   })
-  }.then(function(data) {})
+  }
+
+})
