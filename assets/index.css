@@ -79,3 +79,14 @@ div.aBook img {
 div.aBook a {
   display: inline;
 }
+
+@media (min-width: 799px)  {
+
+  div.books {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+}
