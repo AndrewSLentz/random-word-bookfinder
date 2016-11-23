@@ -40,7 +40,6 @@ $(function() {
                     $(definitionLine).append($('<p></p>').text(def.text))
                     $(definitionLine).append($('<span></span>').text("-" + def.attributionText))
                     $(definitionLine).append($('<br>'))
-                    console.log(def);
                   }
                 })
               }

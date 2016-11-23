@@ -64,17 +64,10 @@ p {
   line-height: 2;
 }
 
-div.books {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
 div.aBook {
   border: 1px solid black;
   display: flex;
   margin: 1rem;
-  width: 30%;
   padding: 1rem;
 }
 
