@@ -1,25 +1,49 @@
 * {
-  outline: 1px solid magenta;
+  box-sizing: border-box;
 }
 
-* {
-  box-sizing: border-box;
+html,
+body {
+  margin: 0;
+  padding: 0;
   color: #1A1818;
 }
 
-html, body {
-  box-sizing: border-box;
+body {
+  display: flex;
+  flex-direction: column;
 }
 
-.searchdiv {
+.searchdiv, .newrandom {
   text-align: center;
+  margin: 1rem;
 }
 
 .searchy {
-  background-color: #EEEEEE;
+  background-color: #EEE;
 }
 
 button {
   background-color: #50A7E0;
   border: 1px solid #50A7E0;
+}
+
+div#word, div#definition, div#books {
+  margin: 1rem;
+  border: 1px solid #63B6ED;
+  display: inline-block;
+}
+
+div#word {
+  text-align: center;
+}
+
+span {
+  font-weight: bolder;
+  margin-left: 1rem;
+}
+
+p {
+  display: inline;
+  line-height: 2;
 }

@@ -4,7 +4,7 @@ $(function() {
     url: "http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
     success: function(data) {
       var randomWord = data.word;
-      console.log(randomWord);
+      $('#word').append($("<h2></h2>").text(randomWord));
       $.ajax({
         url: "https://www.googleapis.com/books/v1/volumes?q=" + randomWord,
         crossDomain: true,
@@ -17,7 +17,11 @@ $(function() {
             url: "http://api.wordnik.com:80/v4/word.json/" + randomWord + "/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
             crossDomain: true,
             success: function(definition) {
-              console.log(definition);
+              $.each(definition, function(j, def) {
+                $('#definition').append($('<span></span>').text(def.partOfSpeech + "-  "));
+                $('#definition').append($('<p></p>').text(def.text))
+                console.log(def);
+              })
             }
           })
         }
