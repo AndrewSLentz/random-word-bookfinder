@@ -63,17 +63,26 @@ $(function() {
       url: "https://www.googleapis.com/books/v1/volumes?q=" + whatISearched,
       crossDomain: true,
       success: function(books) {
-        $('#books').empty()
+        var shelf = $('<div class="books"></div>')
         $.each(books.items, function(i, book) {
-          $('#books').append($('<span></span>').text(book.volumeInfo.title))
-          $('#books').append($('<span></span>').text(book.volumeInfo.authors))
+          var imgBox = $('<div "class=imgBox"></div>')
+          var aBook = $('<div class="aBook"></div>')
+          if (book && book.volumeInfo && book.volumeInfo.imageLinks) {
+            $(aBook).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
+          }
+          $(aBook).append(imgBox)
+          $(aBook).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
+          $(aBook).append($('<br>'))
+          $(aBook).append($('<p></p>').text(book.volumeInfo.authors))
+          $(shelf).append(aBook)
         })
+        $('#books').empty().append(shelf);
         $.ajax({
           type: "GET",
           url: "http://api.wordnik.com:80/v4/word.json/" + whatISearched + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
           crossDomain: true,
           success: function(definition) {
-            $('#definition').empty()
+            var definitionLine = $('<div class="definitions"></div>')
             if (definition.length < 1) {
               $('#definition').append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
             } else {
@@ -81,11 +90,15 @@ $(function() {
                 if (def.text === "") {
                   $('#definition').append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
                 } else {
-                  $('#definition').append($('<span></span>').text(def.partOfSpeech + "-  "));
-                  $('#definition').append($('<p></p>').text(def.text))
+                  $(definitionLine).append($('<span></span>').text((j + 1) + ". " + def.partOfSpeech + ":  "));
+                  $(definitionLine).append($('<p></p>').text(def.text))
+                  $(definitionLine).append($('<span></span>').text("-" + def.attributionText))
+                  $(definitionLine).append($('<br>'))
+                  console.log(def);
                 }
               })
             }
+          $('#definition').empty().append(definitionLine);
           }
         })
       }
