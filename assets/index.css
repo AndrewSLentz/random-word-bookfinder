@@ -4,9 +4,9 @@
 
 html,
 body {
+  color: #1A1818;
   margin: 0;
   padding: 0;
-  color: #1A1818;
 }
 
 body {
@@ -14,9 +14,23 @@ body {
   flex-direction: column;
 }
 
-.searchdiv, .newrandom {
+div.header {
   text-align: center;
+}
+
+div.header h1,
+div.header h2 {
+  margin: 0;
+}
+
+div.header span {
+  font-weight: lighter;
+}
+
+.searchdiv,
+.newrandom {
   margin: 1rem;
+  text-align: center;
 }
 
 .searchy {
@@ -28,17 +42,19 @@ button {
   border: 1px solid #50A7E0;
 }
 
-div#word, div#definition, div#books {
-  margin: 1rem;
+div#word,
+div#definition,
+div#books {
   border: 1px solid #63B6ED;
   display: inline-block;
+  margin: 1rem;
 }
 
 div#word {
   text-align: center;
 }
 
-span {
+div#definition span {
   font-weight: bolder;
   margin-left: 1rem;
 }
@@ -46,4 +62,27 @@ span {
 p {
   display: inline;
   line-height: 2;
+}
+
+div.books {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+div.aBook {
+  border: 1px solid black;
+  display: flex;
+  margin: 1rem;
+  width: 30%;
+  padding: 1rem;
+}
+
+div.aBook img {
+  margin-right: .5rem;
+  border: 1px dotted black;
+}
+
+div.aBook a {
+  display: inline;
 }
