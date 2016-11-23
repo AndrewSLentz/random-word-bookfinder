@@ -10,18 +10,24 @@ $(function() {
         crossDomain: true,
         success: function(books) {
           $.each(books.items, function(i, book) {
+            $('#books').append($('<span></span>').text(book.volumeInfo.title))
             console.log(book.volumeInfo)
           })
           $.ajax({
             type: "GET",
-            url: "http://api.wordnik.com:80/v4/word.json/" + randomWord + "/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+            url: "http://api.wordnik.com:80/v4/word.json/" + randomWord + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
             crossDomain: true,
             success: function(definition) {
+              // console.log(definition)
+              // if(typeof definition !== {}){
+              //   $('#definition').append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
+              // } else {
               $.each(definition, function(j, def) {
                 $('#definition').append($('<span></span>').text(def.partOfSpeech + "-  "));
                 $('#definition').append($('<p></p>').text(def.text))
                 console.log(def);
               })
+            // }
             }
           })
         }
@@ -34,19 +40,31 @@ $(function() {
   })
 
   function typeWord(whatISearched) {
+    $('#word').empty()
+    $('#word').append($("<h2></h2>").text(whatISearched));
     $.ajax({
       url: "https://www.googleapis.com/books/v1/volumes?q=" + whatISearched,
       crossDomain: true,
       success: function(books) {
+        $('#books').empty()
         $.each(books.items, function(i, book) {
-          console.log(book.volumeInfo)
+          $('#books').append($('<span></span>').text(book.volumeInfo.title))
+          $('#books').append($('<span></span>').text(book.volumeInfo.authors))
         })
         $.ajax({
           type: "GET",
-          url: "http://api.wordnik.com:80/v4/word.json/" + whatISearched + "/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+          url: "http://api.wordnik.com:80/v4/word.json/" + whatISearched + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
           crossDomain: true,
           success: function(definition) {
-            console.log(definition);
+            $('#definition').empty()
+             if(definition.text === ""){
+              $('#definition').append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
+            } else {
+            $.each(definition, function(j, def) {
+              $('#definition').append($('<span></span>').text(def.partOfSpeech + "-  "));
+              $('#definition').append($('<p></p>').text(def.text))
+            })
+          }
           }
         })
       }
