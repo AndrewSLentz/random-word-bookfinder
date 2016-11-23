@@ -18,16 +18,19 @@ $(function() {
             url: "http://api.wordnik.com:80/v4/word.json/" + randomWord + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
             crossDomain: true,
             success: function(definition) {
-              // console.log(definition)
-              // if(typeof definition !== {}){
-              //   $('#definition').append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
-              // } else {
+               if(definition.length < 1){
+                 $('#definition').append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
+               } else {
               $.each(definition, function(j, def) {
+                if(def.text === ""){
+                $('#definition').append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
+              } else {
                 $('#definition').append($('<span></span>').text(def.partOfSpeech + "-  "));
                 $('#definition').append($('<p></p>').text(def.text))
                 console.log(def);
+                }
               })
-            // }
+             }
             }
           })
         }
@@ -57,12 +60,16 @@ $(function() {
           crossDomain: true,
           success: function(definition) {
             $('#definition').empty()
-             if(definition.text === ""){
+             if(definition.length < 1){
               $('#definition').append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
             } else {
             $.each(definition, function(j, def) {
-              $('#definition').append($('<span></span>').text(def.partOfSpeech + "-  "));
-              $('#definition').append($('<p></p>').text(def.text))
+              if (def.text === "") {
+                $('#definition').append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
+              } else {
+                $('#definition').append($('<span></span>').text(def.partOfSpeech + "-  "));
+                $('#definition').append($('<p></p>').text(def.text))
+              }
             })
           }
           }
