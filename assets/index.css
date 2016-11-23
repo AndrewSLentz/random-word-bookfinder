@@ -4,6 +4,7 @@
 
 * {
   box-sizing: border-box;
+  color: #1A1818;
 }
 
 html, body {
@@ -12,4 +13,13 @@ html, body {
 
 .searchdiv {
   text-align: center;
+}
+
+.searchy {
+  background-color: #EEEEEE;
+}
+
+button {
+  background-color: #50A7E0;
+  border: 1px solid #50A7E0;
 }
