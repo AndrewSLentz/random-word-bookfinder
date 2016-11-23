@@ -64,17 +64,11 @@ p {
   line-height: 2;
 }
 
-div.books {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
 
 div.aBook {
   border: 1px solid black;
   display: flex;
   margin: 1rem;
-  width: 30%;
   padding: 1rem;
 }
 
@@ -85,4 +79,19 @@ div.aBook img {
 
 div.aBook a {
   display: inline;
+}
+
+@media (min-width: 799px)  {
+
+  div.books {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .aBook {
+    max-width: 33%;
+  }
+
 }
