@@ -21,10 +21,20 @@ div.header {
 div.header h1,
 div.header h2 {
   margin: 0;
+  color: dimgrey;
 }
 
-div.header span {
+div.header h2 {
+  color: darkgrey;
+}
+
+span.blue {
+  color: #50A7E0;
+}
+
+div.header span#grey {
   font-weight: lighter;
+  color: darkgrey;
 }
 
 .searchdiv,
