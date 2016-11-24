@@ -15,7 +15,7 @@ $(function() {
 
   $.ajax({
     type: "GET",
-    url: "http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+    url: "https://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
     success: function(data) {
       var randomWord = data.word.charAt(0).toUpperCase() + data.word.substring(1, data.word.lenght);
       $('#word').append($("<h2></h2>").text(randomWord));
@@ -52,7 +52,7 @@ $(function() {
           $('#books').append(shelf);
           $.ajax({
             type: "GET",
-            url: "http://api.wordnik.com:80/v4/word.json/" + randomWord.toLowerCase() + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+            url: "https://api.wordnik.com:80/v4/word.json/" + randomWord.toLowerCase() + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
             crossDomain: true,
             success: function(definition) {
               var definitionLine = $('<div class="definitions"></div>')
@@ -119,7 +119,7 @@ $(function() {
 
         $.ajax({
           type: "GET",
-          url: "http://api.wordnik.com:80/v4/word.json/" + whatISearched.toLowerCase() + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+          url: "https://api.wordnik.com:80/v4/word.json/" + whatISearched.toLowerCase() + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
           crossDomain: true,
           success: function(definition) {
             var definitionLine = $('<div class="definitions"></div>')
