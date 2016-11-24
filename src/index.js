@@ -1,4 +1,18 @@
 $(function() {
+
+  $(document).ajaxStart(function(){
+    $("#word").hide();
+    $("#definition").hide();
+    $("#books").hide();
+    $('.cp-spinner').show();
+  });
+  $(document).ajaxStop(function(){
+    $('.cp-spinner').hide();
+    $("#word").show();
+    $("#definition").show();
+    $("#books").show();
+  });
+
   $.ajax({
     type: "GET",
     url: "http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
@@ -128,5 +142,5 @@ $(function() {
         })
       }
     })
-  }  
+  }
 })
