@@ -54,21 +54,37 @@ div#word {
   text-align: center;
 }
 
+div#word h2{
+  font-size: 32px;
+  margin: .5rem 0;
+}
+
 div#definition span {
   font-weight: bolder;
   margin-left: 1rem;
 }
 
+div.definitions {
+  padding: 10px;
+}
+
 p {
   display: inline;
   line-height: 2;
+  color: #50A7E0;
 }
 
 div.aBook {
   border: 1px solid black;
   display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 1rem;
   padding: 1rem;
+}
+
+div.aBook span {
+  color: darkgrey;
 }
 
 div.aBook img {
@@ -76,14 +92,26 @@ div.aBook img {
   border: 1px dotted black;
 }
 
+div.bookCover {
+  text-align: center;
+  margin-right: 5%;
+}
+
+div.bookCover p {
+  color: darkgrey;
+}
+
 div.aBook a {
   display: inline;
+}
+
+div.aBook p {
+  max-width: 75%;
 }
 
 @media (min-width: 799px)  {
 
   div.books {
-    display: flex;
     justify-content: center;
     flex-wrap: wrap;
     flex-direction: row;

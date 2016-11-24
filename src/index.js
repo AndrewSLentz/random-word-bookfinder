@@ -12,17 +12,27 @@ $(function() {
           var shelf = $('<div class="books"></div>')
           $.each(books.items, function(i, book) {
             var aBook = $('<div class="aBook"></div>')
+            var bookCover = $('<div class=bookCover></div>')
             var titleAuthor = $('<div class="titleAuthor"></div>')
             if (book && book.volumeInfo && book.volumeInfo.imageLinks) {
-              $(aBook).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
+              $(bookCover).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
             }
             $(titleAuthor).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
             $(titleAuthor).append($('<br>'))
-              if (book && book.volumeInfo && book.volumeInfo.authors) {
-            $(titleAuthor).append($('<p></p>').text(book.volumeInfo.authors.join(', ')))
-          }
-            $(aBook).append(titleAuthor)
-            $(aBook).append($('<p></p>').text(book.volumeInfo.description))
+            if (book && book.volumeInfo && book.volumeInfo.authors) {
+              $(titleAuthor).append($('<p></p>').text(book.volumeInfo.authors.join(', ')))
+            }
+            $(bookCover).append(titleAuthor)
+            $(aBook).append(bookCover)
+            if (book && book.volumeInfo && book.volumeInfo.description) {
+              if (book.volumeInfo.description.length > 900) {
+                var descr = $('<p></p>').text(book.volumeInfo.description.substring(0, 901))
+                $(descr).append($('<span></span>').text("..."));
+              } else {
+                var descr = $('<p></p>').text(book.volumeInfo.description);
+              }
+            }
+            $(aBook).append(descr)
             $(shelf).append(aBook)
           })
           $('#books').append(shelf);
@@ -68,17 +78,27 @@ $(function() {
         var shelf = $('<div class="books"></div>')
         $.each(books.items, function(i, book) {
           var aBook = $('<div class="aBook"></div>')
+          var bookCover = $('<div class=bookCover></div>')
           var titleAuthor = $('<div class="titleAuthor"></div>')
           if (book && book.volumeInfo && book.volumeInfo.imageLinks) {
-            $(aBook).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
+            $(bookCover).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
           }
           $(titleAuthor).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
           $(titleAuthor).append($('<br>'))
-            if (book && book.volumeInfo && book.volumeInfo.authors) {
-          $(titleAuthor).append($('<p></p>').text(book.volumeInfo.authors.join(', ')))
-        }
-          $(aBook).append(titleAuthor)
-          $(aBook).append($('<p></p>').text(book.volumeInfo.description))
+          if (book && book.volumeInfo && book.volumeInfo.authors) {
+            $(titleAuthor).append($('<p></p>').text(book.volumeInfo.authors.join(', ')))
+          }
+          $(bookCover).append(titleAuthor)
+          $(aBook).append(bookCover)
+          if (book && book.volumeInfo && book.volumeInfo.description) {
+            if (book.volumeInfo.description.length > 900) {
+              var descr = $('<p></p>').text(book.volumeInfo.description.substring(0, 901))
+              $(descr).append($('<span></span>').text("..."));
+            } else {
+              var descr = $('<p></p>').text(book.volumeInfo.description);
+            }
+          }
+          $(aBook).append(descr)
           $(shelf).append(aBook)
         })
         $('#books').empty().append(shelf);
@@ -103,7 +123,7 @@ $(function() {
                 }
               })
             }
-          $('#definition').empty().append(definitionLine);
+            $('#definition').empty().append(definitionLine);
           }
         })
       }
