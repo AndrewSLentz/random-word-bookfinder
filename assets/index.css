@@ -10,6 +10,8 @@ body {
 }
 
 body {
+  background-color: #FFFEF6;
+  background-image: url(https://www.transparenttextures.com/patterns/clean-gray-paper.png);
   display: flex;
   flex-direction: column;
 }
@@ -21,6 +23,7 @@ body {
 
 div.header {
   text-align: center;
+  margin-top: 1.5rem;
 }
 
 div.header h1,
@@ -30,7 +33,7 @@ div.header h2 {
 }
 
 div.header h2 {
-  color: darkgrey;
+  color: slategrey;
 }
 
 span.blue {
@@ -91,7 +94,7 @@ p {
 
 div.aBook {
   align-items: center;
-  border: 1px solid black;
+  border: 1px solid lightgray;
   display: flex;
   justify-content: center;
   margin: 1rem;
@@ -99,7 +102,7 @@ div.aBook {
 }
 
 div.aBook span {
-  color: darkgrey;
+  color: slategrey;
 }
 
 div.aBook img {
@@ -113,7 +116,7 @@ div.bookCover {
 }
 
 div.bookCover p {
-  color: darkgrey;
+  color: grey;
 }
 
 div.aBook a {
