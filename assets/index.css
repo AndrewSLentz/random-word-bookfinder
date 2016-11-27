@@ -88,9 +88,10 @@ div.definitions {
 }
 
 p {
+  font-size: 14px;
   color: #50A7E0;
   display: inline;
-  line-height: 2;
+  line-height: 1.5;
 }
 
 div.aBook {
