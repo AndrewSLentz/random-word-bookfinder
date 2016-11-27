@@ -14,6 +14,7 @@ body {
   background-image: url(https://www.transparenttextures.com/patterns/clean-gray-paper.png);
   display: flex;
   flex-direction: column;
+  font-family: monospace;
 }
 
 .cp-spinner {
