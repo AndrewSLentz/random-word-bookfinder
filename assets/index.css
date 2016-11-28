@@ -161,10 +161,6 @@ a.theTitle:hover {
   text-decoration: underline;
 }
 
-.titleAuthor {
-  max-width: 75%
-}
-
 .hideMe {
   visibility: hidden;
 }
