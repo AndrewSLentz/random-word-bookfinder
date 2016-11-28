@@ -5,25 +5,44 @@
 html,
 body {
   color: #1A1818;
+  font-family: "Sumana", serif;
   margin: 0;
   padding: 0;
 }
 
 body {
+  background-color: #FFFEF6;
+  background-image: url(https://www.transparenttextures.com/patterns/clean-gray-paper.png);
   display: flex;
   flex-direction: column;
 }
 
+.cp-spinner {
+  display: flex;
+  margin: 5rem auto;
+}
+
 div.header {
   text-align: center;
+  margin-top: 1.5rem;
 }
 
 div.header h1,
 div.header h2 {
+  color: slategrey;
   margin: 0;
 }
 
-div.header span {
+div.header h2 {
+  color: slategrey;
+}
+
+span.blue {
+  color: #50A7E0;
+}
+
+div.header span#grey {
+  color: darkgrey;
   font-weight: lighter;
 }
 
@@ -33,13 +52,35 @@ div.header span {
   text-align: center;
 }
 
-.searchy {
-  background-color: #EEE;
+.searchdiv {
+  font-family: "Sumana", serif;
 }
 
-button {
+.searchy {
+  font-family: "Sumana", serif;
+  background-color: #EEE;
+  width: 15rem;
+  height: 2rem;
+  margin-right: .5rem;
+  font-size: 20px;
+}
+
+.buttonIt {
   background-color: #50A7E0;
-  border: 1px solid #50A7E0;
+  border: 1px solid slategray;
+  border-bottom: 3px solid slategray;
+  border-left: 2px solid slategray;
+  border-right: 2px solid slategray;
+  width: 15rem;
+  height: 2rem;
+  font-size: 1rem;
+}
+
+.buttonIt:active {
+  border-bottom: 1px solid slategray;
+  border-left: 1px solid slategray;
+  border-right: 1px solid slategray;
+  transform: translateY(2px);
 }
 
 div#word,
@@ -54,44 +95,83 @@ div#word {
   text-align: center;
 }
 
+div#word h2 {
+  font-size: 32px;
+  margin: .5rem 0;
+}
+
 div#definition span {
   font-weight: bolder;
   margin-left: 1rem;
 }
 
+div.definitions {
+  padding: 10px;
+}
+
 p {
+  color: #1A1818;
   display: inline;
   line-height: 2;
 }
 
-
 div.aBook {
-  border: 1px solid black;
+  align-items: center;
+  border: 1px solid lightgray;
   display: flex;
+  justify-content: center;
   margin: 1rem;
   padding: 1rem;
 }
 
+div.aBook span {
+  color: slategrey;
+}
+
 div.aBook img {
   margin-right: .5rem;
-  border: 1px dotted black;
+}
+
+div.bookCover {
+  margin-right: 5%;
+  text-align: center;
+}
+
+div.bookCover p {
+  color: grey;
 }
 
 div.aBook a {
   display: inline;
 }
 
-@media (min-width: 799px)  {
+div.aBook p {
+  max-width: 75%;
+}
 
-  div.books {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    flex-direction: row;
+a.theTitle {
+  color: #50A7E0;
+  text-decoration: none;
+}
+
+a.theTitle:hover {
+  color: #50A7E0;
+  text-decoration: underline;
+}
+
+.titleAuthor {
+  max-width: 75%
+}
+
+.hideMe {
+  visibility: hidden;
+}
+
+@media (max-width: 599px) {
+  div.aBook {
+    flex-direction: column;
   }
-
-  .aBook {
-    max-width: 33%;
+  div.aBook p {
+    max-width: none;
   }
-
 }

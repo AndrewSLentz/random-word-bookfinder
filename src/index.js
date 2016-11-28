@@ -1,35 +1,73 @@
 $(function() {
+
+  $(document).ajaxStart(function(){
+    $("#word").hide();
+    $("#definition").hide();
+    $("#books").hide();
+    $('.cp-spinner').show();
+  });
+  $(document).ajaxStop(function(){
+    $('.cp-spinner').hide();
+    $("#word").show();
+    $("#definition").show();
+    $("#books").show();
+  });
+
   $.ajax({
     type: "GET",
-    url: "http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+    url: "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
     success: function(data) {
       var randomWord = data.word.charAt(0).toUpperCase() + data.word.substring(1, data.word.lenght);
       $('#word').append($("<h2></h2>").text(randomWord));
+
       $.ajax({
         url: "https://www.googleapis.com/books/v1/volumes?q=" + randomWord,
         crossDomain: true,
         success: function(books) {
           var shelf = $('<div class="books"></div>')
           $.each(books.items, function(i, book) {
-            var imgBox = $('<div "class=imgBox"></div>')
             var aBook = $('<div class="aBook"></div>')
+            var bookCover = $('<div class=bookCover></div>')
+            var titleAuthor = $('<div class="titleAuthor"></div>')
             if (book && book.volumeInfo && book.volumeInfo.imageLinks) {
-              $(aBook).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
+              $(bookCover).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
             }
-            $(aBook).append(imgBox)
-            $(aBook).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
-            $(aBook).append($('<br>'))
-            $(aBook).append($('<p></p>').text(book.volumeInfo.authors))
+            $(titleAuthor).append($('<a class="theTitle"></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
+            $(titleAuthor).append($('<br>'))
+            if (book && book.volumeInfo && book.volumeInfo.authors) {
+              $(titleAuthor).append($('<p></p>').text(book.volumeInfo.authors.join(', ')))
+            }
+            $(bookCover).append(titleAuthor)
+            $(aBook).append(bookCover)
+            if (book && book.volumeInfo && book.volumeInfo.description) {
+              if (book.volumeInfo.description.length < 3 ) {
+                var descr = $('<p>No description has been provided for this book. However, you can still click the link for more information.</p>')
+                $(descr).append($('<p class="hideMe">"Here, we append some more text. This text will be hidden, it is just to take up space. This will make things line up more nicely."</p>'))
+              } else if (book.volumeInfo.description.length < 160) {
+                var descr = $('<p></p>').text(book.volumeInfo.description)
+                $(descr).append($('<p class="hideMe">"Here, we append some more text. This text will be hidden, it is just to take up space. This will make things line up more nicely."</p>'));
+              } else if (book.volumeInfo.description.length > 900) {
+                var descr = $('<p></p>').text(book.volumeInfo.description.substring(0, 901))
+                $(descr).append($('<span></span>').text("..."));
+              } else {
+                var descr = $('<p></p>').text(book.volumeInfo.description);
+              }
+            } else {
+               var descr = $('<p>No description has been provided for this book. However, you can still click the link for more information.</p>')
+               $(descr).append($('<p class="hideMe">"Here, we append some more text. This text will be hidden, it is just to take up space. This will make things line up more nicely."</p>'))
+             }
+            $(aBook).append(descr)
             $(shelf).append(aBook)
           })
           $('#books').append(shelf);
+
           $.ajax({
             type: "GET",
-            url: "http://api.wordnik.com:80/v4/word.json/" + randomWord.toLowerCase() + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+            url: "https://api.wordnik.com/v4/word.json/" + randomWord.toLowerCase() + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
             crossDomain: true,
             success: function(definition) {
               var definitionLine = $('<div class="definitions"></div>')
-              if (definition.length < 1) {
+              if (definition.length < 3) {
                 $(definitionLine).append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
               } else {
                 $.each(definition, function(j, def) {
@@ -40,7 +78,6 @@ $(function() {
                     $(definitionLine).append($('<p></p>').text(def.text))
                     $(definitionLine).append($('<span></span>').text("-" + def.attributionText))
                     $(definitionLine).append($('<br>'))
-                    console.log(def);
                   }
                 })
               }
@@ -50,7 +87,7 @@ $(function() {
         }
       })
     }
-  }).then(function(data) {})
+  })
   $("form").on("submit", function(e) {
     e.preventDefault();
     typeWord($("input").val())
@@ -58,33 +95,58 @@ $(function() {
 
   function typeWord(whatISearched) {
     $('#word').empty()
-    $('#word').append($("<h2></h2>").text(whatISearched));
+    $('#word').append($("<h2></h2>").text(whatISearched.charAt(0).toUpperCase() + whatISearched.substring(1, whatISearched.length).toLowerCase()));
+
     $.ajax({
       url: "https://www.googleapis.com/books/v1/volumes?q=" + whatISearched,
       crossDomain: true,
       success: function(books) {
         var shelf = $('<div class="books"></div>')
         $.each(books.items, function(i, book) {
-          var imgBox = $('<div "class=imgBox"></div>')
           var aBook = $('<div class="aBook"></div>')
+          var bookCover = $('<div class=bookCover></div>')
+          var titleAuthor = $('<div class="titleAuthor"></div>')
           if (book && book.volumeInfo && book.volumeInfo.imageLinks) {
-            $(aBook).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
+            $(bookCover).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
           }
-          $(aBook).append(imgBox)
-          $(aBook).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
-          $(aBook).append($('<br>'))
-          $(aBook).append($('<p></p>').text(book.volumeInfo.authors))
+          $(titleAuthor).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
+          $(titleAuthor).append($('<br>'))
+
+          if (book && book.volumeInfo && book.volumeInfo.authors) {
+            $(titleAuthor).append($('<p></p>').text(book.volumeInfo.authors.join(', ')))
+          }
+          $(bookCover).append(titleAuthor)
+          $(aBook).append(bookCover)
+
+          if (book && book.volumeInfo && book.volumeInfo.description) {
+            if (book.volumeInfo.description.length < 3 ) {
+              var descr = $('<p>No description has been provided for this book. However, you can still click the link for more information.</p>')
+              $(descr).append($('<p class="hideMe">"Here, we append some more text. This text will be hidden, it is just to take up space. This will make things line up more nicely."</p>'))
+            } else if (book.volumeInfo.description.length < 160) {
+              var descr = $('<p></p>').text(book.volumeInfo.description)
+              $(descr).append($('<p class="hideMe">"Here, we append some more text. This text will be hidden, it is just to take up space. This will make things line up more nicely."</p>'));
+            } else if (book.volumeInfo.description.length > 900) {
+              var descr = $('<p></p>').text(book.volumeInfo.description.substring(0, 901))
+              $(descr).append($('<span></span>').text("..."));
+            } else {
+              var descr = $('<p></p>').text(book.volumeInfo.description);
+            }
+          } else {
+             var descr = $('<p>No description has been provided for this book. However, you can still click the link for more information.</p>')
+             $(descr).append($('<p class="hideMe">"Here, we append some more text. This text will be hidden, it is just to take up space. This will make things line up more nicely."</p>'))
+           }
+          $(aBook).append(descr)
           $(shelf).append(aBook)
         })
         $('#books').empty().append(shelf);
 
         $.ajax({
           type: "GET",
-          url: "http://api.wordnik.com:80/v4/word.json/" + whatISearched + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
+          url: "https://api.wordnik.com/v4/word.json/" + whatISearched.toLowerCase() + "/definitions?limit=10&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
           crossDomain: true,
           success: function(definition) {
             var definitionLine = $('<div class="definitions"></div>')
-            if (definition.length < 1) {
+            if (definition.length < 3) {
               $(definitionLine).append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
             } else {
               $.each(definition, function(j, def) {
@@ -98,7 +160,7 @@ $(function() {
                 }
               })
             }
-          $('#definition').empty().append(definitionLine);
+            $('#definition').empty().append(definitionLine);
           }
         })
       }
