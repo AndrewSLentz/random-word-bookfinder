@@ -109,7 +109,7 @@ $(function() {
           if (book && book.volumeInfo && book.volumeInfo.imageLinks) {
             $(bookCover).append($('<img>').attr('src', book.volumeInfo.imageLinks.thumbnail));
           }
-          $(titleAuthor).append($('<a></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
+          $(titleAuthor).append($('<a class="theTitle"></a>').attr('href', book.volumeInfo.infoLink).text(book.volumeInfo.title))
           $(titleAuthor).append($('<br>'))
 
           if (book && book.volumeInfo && book.volumeInfo.authors) {
