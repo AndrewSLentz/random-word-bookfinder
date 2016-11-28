@@ -67,7 +67,7 @@ $(function() {
             crossDomain: true,
             success: function(definition) {
               var definitionLine = $('<div class="definitions"></div>')
-              if (definition.length < 3) {
+              if (definition.length === 0) {
                 $(definitionLine).append($('<span>Sorry, we couldn\'t find a definition for your word!</span>'))
               } else {
                 $.each(definition, function(j, def) {
@@ -146,7 +146,7 @@ $(function() {
           crossDomain: true,
           success: function(definition) {
             var definitionLine = $('<div class="definitions"></div>')
-            if (definition.length < 3) {
+            if (definition.length === 0) {
               $(definitionLine).append($('<span></span>').text('Sorry, we couldn\'t find a definition for your word!'))
             } else {
               $.each(definition, function(j, def) {
