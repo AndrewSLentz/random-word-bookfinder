@@ -17,7 +17,7 @@ $(function() {
     type: "GET",
     url: "https://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5",
     success: function(data) {
-      var randomWord = data.word.charAt(0).toUpperCase() + data.word.substring(1, data.word.lenght);
+      var randomWord = data.word.charAt(0).toUpperCase() + data.word.substring(1, data.word.length);
       $('#word').append($("<h2></h2>").text(randomWord));
 
       $.ajax({
