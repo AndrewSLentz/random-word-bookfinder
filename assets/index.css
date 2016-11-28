@@ -84,6 +84,7 @@ div.header span#grey {
   width: 15rem;
   height: 2rem;
   font-size: 1rem;
+  outline: none;
 }
 
 .buttonIt:active {
