@@ -18,6 +18,11 @@ body {
   font-family: monospace;
 }
 
+form {
+  display: flex;
+  justify-content: center;
+}
+
 .cp-spinner {
   display: flex;
   margin: 5rem auto;
@@ -40,6 +45,10 @@ div.header h2 {
 
 span.blue {
   color: #50A7E0;
+}
+
+span.gray {
+  color: lightgray;
 }
 
 div.header span#grey {
@@ -153,12 +162,11 @@ div.aBook p {
 
 a.theTitle {
   color: #50A7E0;
-  text-decoration: none;
 }
 
 a.theTitle:hover {
   color: #50A7E0;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .hideMe {
